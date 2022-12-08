@@ -1,0 +1,27 @@
+{
+  "name": "inventory_management_backend_application",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "npx nodemon src/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Souvik-Jha/-Inventory_Management_Backend_Application.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Souvik-Jha/-Inventory_Management_Backend_Application/issues"
+  },
+  "homepage": "https://github.com/Souvik-Jha/-Inventory_Management_Backend_Application#readme",
+  "dependencies": {
+    "body-parser": "^1.20.1",
+    "express": "^4.18.2",
+    "mongoose": "^6.8.0",
+    "nodemon": "^2.0.20"
+  }
+}
