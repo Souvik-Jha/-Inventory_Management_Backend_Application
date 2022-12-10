@@ -21,4 +21,4 @@ const grnLineItemSchema = new mongoose.Schema({
     },
 },{timestamps:true})
 
-module.exports = mongoose.model('grnLineitem', grnLineItemSchema)
+module.exports = mongoose.model('GrnLineItem', grnLineItemSchema)

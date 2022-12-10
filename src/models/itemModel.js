@@ -8,16 +8,15 @@ const itemSchema = new mongoose.Schema({
     },
     quantity: {
         type: Number,
-        required: true
+        required: true,
+        default: 0
     },
     stockPrice: {
         type: Number,
-        required: true,
         trim: true
     },
     sellPrice: {
         type: Number,
-        required: true,
         trim: true
     },
     deleted: {
@@ -27,4 +26,4 @@ const itemSchema = new mongoose.Schema({
 
 }, { timestamps: true })
 
-module.exports = mongoose.model('item', itemSchema)
+module.exports = mongoose.model('Item', itemSchema)

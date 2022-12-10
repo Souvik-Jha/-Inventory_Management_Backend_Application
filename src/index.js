@@ -7,11 +7,13 @@ const app = express()
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }))
 
+mongoose.set('strictQuery', true);
 mongoose.connect("mongodb+srv://Souvik_Jha:Govtjob1@cluster0.zb2phjl.mongodb.net/Inventory_Management", {
     useNewUrlParser: true
 })
 .then(() => console.log("MongoDb is connected"))
 .catch(err => console.log(err))
+
 
 app.use('/', route);
 

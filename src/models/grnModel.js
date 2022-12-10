@@ -14,13 +14,25 @@ const grnSchema = new mongoose.Schema({
     },
 
     vendorFullAddress: {
-        type: String,
-        required: true,
-        trim: true
+        street: {
+            type: String,
+            require: true,
+            trim: true
+        },
+        city: {
+            type: String,
+            require: true,
+            trim: true
+        },
+        pincode: {
+            type: Number,
+            require: true,
+            trim: true
+        }
     },
     grnLineItems: {
-        type: mongoose.Types.ObjectId,
-        ref: "grnLineitems",
+        type: [mongoose.Schema.Types.ObjectId],
+        ref: "GrnLineItems",
         required: true
     },
     status: {

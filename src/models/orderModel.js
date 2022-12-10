@@ -12,18 +12,32 @@ const orderSchema = new mongoose.Schema({
         unique: true
     },
     customerFullAddress: {
-        type: String,
-        required: true
+        street: {
+            type: String,
+            require: true,
+            trim: true
+        },
+        city: {
+            type: String,
+            require: true,
+            trim: true
+        },
+        pincode: {
+            type: Number,
+            require: true,
+            trim: true
+        }
     },
     orderLineItems: {
-        type: ObjectId,
-        ref: "orderLineItems",
+        type: [mongoose.Schema.Types.ObjectId],
+        ref: "OrderLineItems",
         required: true
     },
     status: {
         type: String,
         default: "GENERATED",
-        enum: ["GENERATED", "COMPLETED", "CANCELLED"]
+        enum: ["GENERATED", "COMPLETED", "CANCELLED"],
+        required: true
     },
     date: {
         type: Date,
