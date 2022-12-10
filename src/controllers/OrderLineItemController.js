@@ -1,5 +1,4 @@
 const itemModel = require("../models/itemModel")
-const orderLineItemModel = require("../models/orderLineItemModel")
 const orderModel = require("../models/orderModel")
 const validator = require("../validators/validator")
 
@@ -22,7 +21,6 @@ const orderUpdate = async function (req, res) {
         if (status == "COMPLETED") {
             for (let i = 0; i < orderCheck.orderLineItems.length; i++) {
                 let updatedItem = await itemModel.updateOne({ productName: orderCheck.orderLineItems[i].productName }, { $inc: { quantity: -orderCheck.orderLineItems[i].quantity } })
-                //console.log(ItemDoc, updatedItem)
             }
         }
         return res.status(200).send({ status: true, message: orderCheck })

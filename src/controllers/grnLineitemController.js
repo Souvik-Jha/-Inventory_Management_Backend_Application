@@ -1,4 +1,3 @@
-const grnLineItemModel = require("../models/grnLineItemModel")
 const grnModel = require("../models/grnModel")
 const itemModel = require("../models/itemModel")
 const validator = require("../validators/validator")
@@ -17,9 +16,7 @@ const grnUpdate = async function (req, res) {
         if (!validator.isValidObjectId(grnId)) return res.status(400).send({ status: false, message: 'Please provide valid grnId' })
         let grnCheck = await grnModel.findOneAndUpdate({ _id: grnId, deleted:false , status:"GENERATED"}, { status }, { new: true }).populate("grnLineItems")
         if (!grnCheck) return res.status(404).send({ status: false, message: "action cannot be done" })
-        console.log(grnCheck)
         
-
 
         if (status == "COMPLETED") {
             for (let i = 0; i < grnCheck.grnLineItems.length; i++) {

@@ -45,15 +45,7 @@ const createOrder = async function (req, res) {
             if (!productId) return res.status(400).send({ ststus: false, message: "This product is not present" })
             let createOrderLineItem = await orderLineItemModel.create({ productName: orderLineItems[i].productName, quantity: orderLineItems[i].quantity, sellPrice: productId.sellPrice })
             data.orderLineItems[i] = createOrderLineItem
-            console.log("Items:" + createOrderLineItem)
         }
-
-
-        // if (!grnLineItems) return res.status(400).send({ status: false, message: 'Please provide grnLineItems' })
-        // if (!validator.isValidObjectId(grnLineItems)) return res.status(400).send({ status: false, message: 'Please provide valid grnLineItems' })
-        // let grnLineItemCheck = await grnLineItemModel.findById(grnLineItems)
-        // if (!grnLineItemCheck) return res.status(404).send({ status: false, message: ` grnLineItem ${grnLineItems} not found` })
-        // if (grnLineItemCheck.isDeleted == true) return res.status(404).send({ status: false, message: `${data.productId} this product is deleted` })
 
         data.date = Date.now()
 
