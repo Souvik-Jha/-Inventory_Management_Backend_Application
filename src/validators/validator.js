@@ -14,4 +14,4 @@ const isValid = (value) => {
     if (typeof value == "string") return true;
 }
 
-module.exports = {isValidObjectId,isValid,isValidRequestBody}
+module.exports = { isValidObjectId, isValid, isValidRequestBody }

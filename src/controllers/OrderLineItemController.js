@@ -14,7 +14,7 @@ const orderUpdate = async function (req, res) {
 
         if (!orderId) return res.status(400).send({ status: false, message: "please provide orderId" })
         if (!validator.isValidObjectId(orderId)) return res.status(400).send({ status: false, message: 'Please provide valid orderId' })
-        let orderCheck = await orderModel.findOneAndUpdate({ _id: orderId,deleted:false, status:"GENERATED" }, { status }, { new: true }).populate("orderLineItems")
+        let orderCheck = await orderModel.findOneAndUpdate({ _id: orderId, deleted: false, status: "GENERATED" }, { status }, { new: true }).populate("orderLineItems")
         if (!orderCheck) return res.status(404).send({ status: false, message: "This action cannot be done" })
 
 
