@@ -57,7 +57,7 @@ const createGrn = async function (req, res) {
 
         data.date = Date.now()
 
-        let createDoc = await grnModel.create(data)
+        let createDoc = await (await grnModel.create(data)).populate("grnLineItems")
         res.status(201).send({ status: true, message: 'Success', data: createDoc })
 
     } catch (err) {
@@ -90,7 +90,7 @@ const getGrn = async function (req, res) {
             query._id = grnId
         }
 
-        let grnDoc = await grnModel.find({ ...query, deleted: false })
+        let grnDoc = await grnModel.find({ ...query, deleted: false }).populate("grnLineItems")
         if (!grnDoc.length) return res.status(400).send({ status: false, message: "no such GRN" })
         return res.status(200).send({ status: true, message: grnDoc })
     } catch (err) {
@@ -151,7 +151,7 @@ const updateGrn = async function (req, res) {
             }
         }
 
-        let updatedGrn = await grnModel.findByIdAndUpdate(grnId, updateData, { new: true })
+        let updatedGrn = await grnModel.findByIdAndUpdate(grnId, updateData, { new: true }).populate("grnLineItems")
         return res.status(200).send({ status: false, message: updatedGrn })
 
     } catch (err) {
@@ -172,7 +172,7 @@ const deleteGrn = async function (req, res) {
 
         let deletedDoc = await grnModel.findOneAndUpdate({ _id: grnId }, { deleted: true }, { new: true })
         console.log(deletedDoc)
-        res.status(200).send({ status: true, message: "grn is deleted" })
+        return res.status(200).send({ status: true, message: "grn deleted successfully" })
     } catch (err) {
         console.log(err)
         return res.status(500).send({ status: false, message: err.message })

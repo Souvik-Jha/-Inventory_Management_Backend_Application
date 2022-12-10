@@ -57,7 +57,7 @@ const createOrder = async function (req, res) {
 
         data.date = Date.now()
 
-        let createDoc = await orderModel.create(data)
+        let createDoc = await (await orderModel.create(data)).populate("orderLineItems")
         res.status(201).send({ status: true, message: 'Success', data: createDoc })
 
     } catch (err) {
@@ -90,7 +90,7 @@ const getOrder = async function (req, res) {
             query._id = orderId
         }
 
-        let orderDoc = await orderModel.find({ ...query, deleted: false })
+        let orderDoc = await orderModel.find({ ...query, deleted: false }).populate("orderLineItems")
         if (!orderDoc.length) return res.status(400).send({ status: false, message: "no such Order" })
         return res.status(200).send({ status: true, message: orderDoc })
     } catch (err) {
@@ -151,7 +151,7 @@ const updateOrder = async function (req, res) {
             }
         }
 
-        let updatedOrder = await orderModel.findByIdAndUpdate(orderId, updateData, { new: true })
+        let updatedOrder = await orderModel.findByIdAndUpdate(orderId, updateData, { new: true }).populate("orderLineItems")
         return res.status(200).send({ status: false, message: updatedOrder })
 
     } catch (err) {
@@ -172,7 +172,7 @@ const deleteOrder = async function (req, res) {
 
         let deletedDoc = await orderModel.findOneAndUpdate({ _id: orderId }, { deleted: true }, { new: true })
         console.log(deletedDoc)
-        res.status(200).send({ status: true, message: "order is deleted" })
+        return res.status(200).send({ status: true, message: "order deleted successfully" })
     } catch (err) {
         console.log(err)
         return res.status(500).send({ status: false, message: err.message })

@@ -32,7 +32,7 @@ const grnSchema = new mongoose.Schema({
     },
     grnLineItems: {
         type: [mongoose.Schema.Types.ObjectId],
-        ref: "GrnLineItems",
+        ref: "GrnLineItem",
         required: true
     },
     status: {

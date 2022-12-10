@@ -15,15 +15,14 @@ const orderUpdate = async function (req, res) {
 
         if (!orderId) return res.status(400).send({ status: false, message: "please provide orderId" })
         if (!validator.isValidObjectId(orderId)) return res.status(400).send({ status: false, message: 'Please provide valid orderId' })
-        let orderCheck = await orderModel.findOneAndUpdate({ _id: orderId,deleted:false, status:"GENERATED" }, { status }, { new: true })
+        let orderCheck = await orderModel.findOneAndUpdate({ _id: orderId,deleted:false, status:"GENERATED" }, { status }, { new: true }).populate("orderLineItems")
         if (!orderCheck) return res.status(404).send({ status: false, message: "This action cannot be done" })
 
 
         if (status == "COMPLETED") {
             for (let i = 0; i < orderCheck.orderLineItems.length; i++) {
-                let ItemDoc = await orderLineItemModel.findById(orderCheck.orderLineItems[i]).select({ _id: 0, productName: 1, quantity: 1 })
-                let updatedItem = await itemModel.updateOne({ productName: ItemDoc.productName }, { $inc: { quantity: -ItemDoc.quantity } })
-                console.log(ItemDoc, updatedItem)
+                let updatedItem = await itemModel.updateOne({ productName: orderCheck.orderLineItems[i].productName }, { $inc: { quantity: -orderCheck.orderLineItems[i].quantity } })
+                //console.log(ItemDoc, updatedItem)
             }
         }
         return res.status(200).send({ status: true, message: orderCheck })

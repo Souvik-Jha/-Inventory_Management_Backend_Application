@@ -30,7 +30,7 @@ const orderSchema = new mongoose.Schema({
     },
     orderLineItems: {
         type: [mongoose.Schema.Types.ObjectId],
-        ref: "OrderLineItems",
+        ref: "OrderLineItem",
         required: true
     },
     status: {

@@ -15,16 +15,15 @@ const grnUpdate = async function (req, res) {
 
         if (!grnId) return res.status(400).send({ status: false, message: "please provide grnId" })
         if (!validator.isValidObjectId(grnId)) return res.status(400).send({ status: false, message: 'Please provide valid grnId' })
-        let grnCheck = await grnModel.findOneAndUpdate({ _id: grnId, deleted:false , status:"GENETATED"}, { status }, { new: true })
+        let grnCheck = await grnModel.findOneAndUpdate({ _id: grnId, deleted:false , status:"GENERATED"}, { status }, { new: true }).populate("grnLineItems")
         if (!grnCheck) return res.status(404).send({ status: false, message: "action cannot be done" })
+        console.log(grnCheck)
         
 
 
         if (status == "COMPLETED") {
             for (let i = 0; i < grnCheck.grnLineItems.length; i++) {
-                let ItemDoc = await grnLineItemModel.findById(grnCheck.grnLineItems[i]).select({ _id: 0, productName: 1, quantity: 1 })
-                let updatedItem = await itemModel.updateOne({ productName: ItemDoc.productName }, { $inc: { quantity: ItemDoc.quantity } })
-                console.log(ItemDoc, updatedItem)
+                let updatedItem = await itemModel.updateOne({ productName: grnCheck.grnLineItems[i].productName }, { $inc: { quantity: grnCheck.grnLineItems[i].quantity } })
             }
         }
         return res.status(200).send({ status: true, message: grnCheck })
